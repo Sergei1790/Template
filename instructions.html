@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    1. create project folder
+    2. create src folder with index.html, css/style.css, js/index.js
+    3. create .gitignore with simple text: node_modules
+    4. terminal: npm init -y
+    5. terminal: npm install webpack webpack-cli --save-dev
+    6. package.json remove 
+        - "main": "index.js",
+
+        and instead
+        + "private": true, //not to accidently publish to the npm registry
+    7. create 1 config file (webpack.config.js), 
+        or 3 -  for common (webpack.common.js),
+                development (webpack.dev.js) 
+                and production (webpack.prod.js) 
+        copy their configs
+    8. terminal: npm install --save-dev html-webpack-plugin
+    9. terminal: npm install --save-dev style-loader css-loader
+    10. src/index.js - add
+        + import '../css/style.css';
+        + if (process.env.NODE_ENV !== 'production') {
+            console.log('Looks like we are in development mode!');
+        }
+    11. terminal: npm install --save-dev webpack-merge (plugin for splitting dev and prod)
+    12. package.json - add to scripts - 
+    watch(to run webpack on changes),
+    start(run in dev mode)
+    and build (run in prod mode)
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "watch": "webpack --watch",
+        "start": "webpack serve --open --config webpack.dev.js", // command "serve --open" starts webserver
+        "build": "webpack --config webpack.prod.js",
+        "GithubPagesDeploy": "git subtree push --prefix dist origin gh-pages"  // helps correctly deploy repo on github pages
+    },
+    13. Optional - install webserver
+        a) terminal: npm install --save-dev webpack-dev-server
+        b) webpack.dev.js - add
+            + devServer: {
+                static: './dist',
+            },
+
+    14. installing ESLint (tool for identifying and fixing problems in JavaScript code)
+        a) terminal: npm init @eslint/config@latest
+        a) terminal: npm install eslint-webpack-plugin --save-dev (not needed if using basic eslint)
+        // I use basic eslint and not plugin because i have vs code ext thet live highlights errors
+        b) copy eslint.config.mjs from Template repo (we add options to recognize node.js for webpack config (not to highlight it in red))
+    15. installing Jest (tool for testing)
+        a) terminal: npm install --save-dev jest
+        b) create js jest file for testing - js/index.test.js (.test - indicates jest)
+        c) in package.json replace "test": "echo \"Error: no test specified\" && exit 1", -> with ->  "test": "jest",
+        d) By default, the current version of Jest will not recognize ES6 import statements.
+            -> terminal: npm install --save-dev babel-jest @babel/core @babel/preset-env
+        e) add to package.json -> 
+            "babel": {
+                "presets": [
+                "@babel/preset-env"
+                ]
+            },
+            "jest": {
+                "transform": {
+                "^.+\\.jsx?$": "babel-jest"
+                }
+            }
+        f) index.test.js add -> import {describe, expect, test} from '@jest/globals';
+
+    CTRL + C - cancels terminal task
+    npm uninstall eslint --save (to delete package)
+    npm uninstall eslint-webpack-plugin --save
+    npm prune - cleans node modules depending on what is in package.json 
+</body>
+</html>
