@@ -32,9 +32,9 @@ module.exports = {
     //   fix: true, // Automatically fix linting errors where possible
     // }),
   ],
-  optimization: {
-    runtimeChunk: 'single',
-  },
+  // optimization: {
+  //   runtimeChunk: 'single', donno what is it
+  // },
   module: {
     rules: [
       {
