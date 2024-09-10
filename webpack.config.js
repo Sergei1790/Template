@@ -32,8 +32,13 @@ module.exports = {
     //   fix: true, // Automatically fix linting errors where possible
     // }),
   ],
+  // This is the part of the Webpack bundle that handles the 
+  // internal mechanics of how modules are loaded and managed in the browser.
+  //  It includes code that deals with things like module loading, module caching, 
+  // and resolving dependencies.
+  // IT IS INBUILT in bundle.js. If we want to separate this code, we use option below
   // optimization: {
-  //   runtimeChunk: 'single', donno what is it
+  //   runtimeChunk: 'single', 
   // },
   module: {
     rules: [
